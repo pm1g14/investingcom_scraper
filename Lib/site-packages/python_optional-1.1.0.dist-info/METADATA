@@ -1,0 +1,51 @@
+Metadata-Version: 2.1
+Name: python-optional
+Version: 1.1.0
+Summary: Returns None if a dict key does not exist
+Home-page: https://github.com/rogervila/python_optional
+Author: Roger Vilà
+Author-email: rogervila@me.com
+License: MIT
+Download-URL: https://github.com/rogervila/python_optional/archive/1.1.0.tar.gz
+Keywords: optional dict key,catch keyerror
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Build Tools
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+
+# Python Optional
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=rogervila_python_optional&metric=alert_status)](https://sonarcloud.io/dashboard?id=rogervila_python_optional)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=rogervila_python_optional&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=rogervila_python_optional)
+
+
+Returns `None` if a dict key does not exist
+
+
+## Install
+
+```sh
+pip install python_optional
+```
+
+## Usage
+
+```py
+from python_optional import optional
+
+data = {
+    'a' : 'b'
+}
+
+result = optional(data).get('a') # 'b'
+result = optional(data).a # 'b'
+
+result = optional(data).get('z') # None
+result = optional(data).z # None
+```
+
+
