@@ -32,12 +32,10 @@ def getDriver():
 if __name__ == '__main__':
     investingcom_scraper = InvestingComScraper()
 
-    while True:
-        driver = getDriver()
-        rows = investingcom_scraper.scrape(driver)
-        #send with zeromq
-        message:dict = JsonUtils().convertListToJson(elements= rows)
-        logging.info(message)
-        print(message)
-
-        time.sleep(3)
+    
+    driver = getDriver()
+    rows = investingcom_scraper.scrape(driver)
+    #send with zeromq
+    message:dict = JsonUtils().convertListToJson(elements= rows)
+    logging.info(message)
+    print(message)

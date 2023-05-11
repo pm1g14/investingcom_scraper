@@ -1,5 +1,5 @@
 from selenium.webdriver.common.by import By
-from model import RowParameters
+from model import RowParameters, CPIEvent
 from utils import NumUtils as util
 from utils import JsonUtils, DateUtils
 from datetime import date
@@ -41,6 +41,7 @@ class InvestingComScraper(Scraper):
                 actual = row.find_element(By.XPATH, f'/html/body/div[5]/section/div[6]/table/tbody/tr[{index}]/td[5]').text
                 forecast = row.find_element(By.XPATH, f'/html/body/div[5]/section/div[6]/table/tbody/tr[{index}]/td[6]').text
                 previous = row.find_element(By.XPATH, f'/html/body/div[5]/section/div[6]/table/tbody/tr[{index}]/td[7]').text
+                
                 if ("%" in actual):
                     actual = actual.replace('%', '')
                 if "%" in forecast:
@@ -54,11 +55,17 @@ class InvestingComScraper(Scraper):
                     forecast = forecast.replace('B', '')
                 if "B" in previous:
                     previous = previous.replace('B', '')
-                
-                if (("Core CPI (YoY)" in event) or ("CPI (YoY)" in event) or ("Core CPI (MoM)" in event) or ("CPI (MoM)" in event)):
-                    if (actual != ''):
-                        logging.info(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}")
-                        print(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}") 
+                event = 'Core CPI (YoY)'
+                currency = 'USD'
+                if (self.__isCPIEvent(event = event) and currency == 'USD'):
+                    event:str = CPIEvent.toCPIEvent(event).value
+
+                    while actual == '':
+                        actual = row.find_element(By.XPATH, f'/html/body/div[5]/section/div[6]/table/tbody/tr[{index}]/td[5]').text
+                    
+                    logging.info(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}")
+                    print(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}") 
+                    
 
                 rowParams = RowParameters(
                     date = datez, 
@@ -75,3 +82,7 @@ class InvestingComScraper(Scraper):
                 continue
         driver.close()        
         return rows
+    
+
+    def __isCPIEvent(self, event:str) -> bool:
+        return ("Core CPI (YoY)" in event) or ("CPI (YoY)" in event) or ("Core CPI (MoM)" in event) or ("CPI (MoM)" in event)
