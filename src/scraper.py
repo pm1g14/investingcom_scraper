@@ -59,10 +59,6 @@ class InvestingComScraper(Scraper):
                 
                 if (self.__isCPIEvent(event = event) and currency == 'USD'):
                     event:str = CPIEvent.toCPIEvent(event).value
-
-                    while actual == '':
-                        actual = row.find_element(By.XPATH, f'/html/body/div[5]/section/div[6]/table/tbody/tr[{index}]/td[5]').text
-                    
                     logging.info(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}")
                     print(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}") 
                     
@@ -80,7 +76,6 @@ class InvestingComScraper(Scraper):
             except Exception as e:
                 print(e)
                 continue
-        driver.close()        
         return rows
     
 

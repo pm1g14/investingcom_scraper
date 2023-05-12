@@ -35,12 +35,13 @@ if __name__ == '__main__':
     investingcom_scraper = InvestingComScraper()
 
     driver = getDriver()
-    rows = investingcom_scraper.scrape(driver)
-    #send with zeromq
-    message:dict = JsonUtils().convertListToJson(elements= rows)
-    logging.info(message)
-    print(message)
+    while True:
+        rows = investingcom_scraper.scrape(driver)
+        #send with zeromq
+        message:dict = JsonUtils().convertListToJson(elements= rows)
+        logging.info(message)
+        print(message)
 
-    if rows:
-        publisher.publish(message=message)
-    
+        if rows:
+            publisher.publish(message=message)
+        driver.refresh()
