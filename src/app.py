@@ -6,8 +6,6 @@ from model import RowParameters
 from utils import NumUtils as util
 from utils import JsonUtils, DateUtils
 from publisher import ZmqPublisher
-import sys, time
-from datetime import date
 from scraper import InvestingComScraper
 import logging
 
@@ -25,6 +23,8 @@ def filterRows(rows: RowParameters, event:str, curr:str):
 
 def getDriver():
     chrome_options = Options()
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument("--headless")
     chrome_options.add_argument("--window-size=1920,1080")
     driver = webdriver.Chrome(options = chrome_options)
     return driver
