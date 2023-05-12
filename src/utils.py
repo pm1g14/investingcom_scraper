@@ -30,7 +30,7 @@ class JsonUtils:
 
 class DateUtils:
 
-    def getInvestingComDateFormat(self, date:date) -> str:
+    def getInvestingComDateFormat(date:date) -> str:
         format = r"%b %d %Y"
         try:
             desiredFormat = date.strftime(format)
@@ -39,7 +39,7 @@ class DateUtils:
             print('Cannot convert given date to the desired format.')
             return ''
 
-    def getDateInCorrectFormat(self, date:date) -> str:
+    def getDateInCorrectFormat(date:date) -> str:
         format = r"%b%d.%Y"
         try:
             desiredFormat = date.strftime(format)
