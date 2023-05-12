@@ -70,11 +70,11 @@ class InvestingComScraper(Scraper):
                 rowParams = RowParameters(
                     date = nowDateFormatted, 
                     time = eventTime, 
-                    currency = currency, 
-                    event = event, 
-                    actual = util.stringToFloat(actual), 
-                    forecast = util.stringToFloat(forecast),
-                    previous = util.stringToFloat(previous)
+                    currency = currency.strip(), 
+                    event = event.strip(), 
+                    actual = util.stringToFloat(actual.strip()), 
+                    forecast = util.stringToFloat(forecast.strip()),
+                    previous = util.stringToFloat(previous.strip())
                 )
                 rows.append(rowParams)
             except Exception as e:
