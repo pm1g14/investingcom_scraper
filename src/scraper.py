@@ -28,13 +28,14 @@ class InvestingComScraper(Scraper):
         except Exception as e2:
             print('Popup signup does not exist. Continuing..')
 
-        datez = date.today()
         table = driver.find_element(By.XPATH, '//*[@id="economicCalendarData"]')
         rows = []
         index = 1
         for row in table.find_elements(By.TAG_NAME, 'tr'):
             index += 1
             try:
+                nowDate = date.today()
+                nowDateFormatted = DateUtils.getInvestingComDateFormat(date = nowDate)
                 event = driver.find_element(By.XPATH, f'/html/body/div[5]/section/div[6]/table/tbody/tr[{index}]/td[4]').text
                 eventTime = row.find_element(By.XPATH, f'/html/body/div[5]/section/div[6]/table/tbody/tr[{index}]/td[1]').text
                 currency = row.find_element(By.XPATH, f'/html/body/div[5]/section/div[6]/table/tbody/tr[{index}]/td[2]').text
@@ -55,8 +56,7 @@ class InvestingComScraper(Scraper):
                     forecast = forecast.replace('B', '')
                 if "B" in previous:
                     previous = previous.replace('B', '')
-                event = 'Core CPI (YoY)'
-                currency = 'USD'
+                
                 if (self.__isCPIEvent(event = event) and currency == 'USD'):
                     event:str = CPIEvent.toCPIEvent(event).value
 
@@ -68,7 +68,7 @@ class InvestingComScraper(Scraper):
                     
 
                 rowParams = RowParameters(
-                    date = datez, 
+                    date = nowDateFormatted, 
                     time = eventTime, 
                     currency = currency, 
                     event = event, 

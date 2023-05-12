@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.options import Options
 from model import RowParameters
 from utils import NumUtils as util
 from utils import JsonUtils, DateUtils
+from publisher import ZmqPublisher
 import sys, time
 from datetime import date
 from scraper import InvestingComScraper
@@ -30,12 +31,16 @@ def getDriver():
 
 
 if __name__ == '__main__':
+    publisher =  ZmqPublisher()
     investingcom_scraper = InvestingComScraper()
 
-    
     driver = getDriver()
     rows = investingcom_scraper.scrape(driver)
     #send with zeromq
     message:dict = JsonUtils().convertListToJson(elements= rows)
     logging.info(message)
     print(message)
+
+    if rows:
+        publisher.publish(message=message)
+    
