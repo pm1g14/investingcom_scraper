@@ -3,8 +3,8 @@ from model import RowParameters, CPIEvent
 from utils import NumUtils as util
 from utils import JsonUtils, DateUtils
 from datetime import date
-import sys, time, datetime
-import logging
+import sys, datetime
+import logging, time 
 logging.basicConfig(filename="applogs", format='%(asctime)s%(message)s', filemode='w')
 
 class Scraper:
@@ -15,13 +15,14 @@ class Scraper:
 class InvestingComScraper(Scraper):
 
     def scrape(self, driver):
+       
         driver.get(f"https://www.investing.com/economic-calendar/")
         try:
             maybePrivacyPopup = driver.find_element(By.XPATH, '//*[@id="onetrust-accept-btn-handler"]').click()
         except Exception as e:
             print('Popup accept privacy policy does not exist. Continuing')
         
-        time.sleep(6)
+        time.sleep(4)
 
         try:
             maybeSignupPopup = driver.find_element(By.XPATH, '//*[@id="PromoteSignUpPopUp"]/div[2]/i').click()
