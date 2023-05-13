@@ -7,7 +7,7 @@ from utils import NumUtils as util
 from utils import JsonUtils, DateUtils
 from publisher import ZmqPublisher
 from scraper import InvestingComScraper
-import logging
+import logging, time
 
 logging.basicConfig(filename="applogs", format='%(asctime)s%(message)s', filemode='w')
 
@@ -36,6 +36,8 @@ if __name__ == '__main__':
 
     driver = getDriver()
     while True:
+        start_timestamp = time.time()
+        logging.debug(f'Starting parsing at: {time.time()}')
         rows = investingcom_scraper.scrape(driver)
         #send with zeromq
         message:dict = JsonUtils().convertListToJson(elements= rows)
@@ -44,4 +46,9 @@ if __name__ == '__main__':
 
         if rows:
             publisher.publish(message=message)
+
         driver.refresh()
+        end_timestamp = time.time()
+        final = end_timestamp - start_timestamp
+        print(f'Time to load and scrape: {final} seconds')
+        logging.debug(f'Time to load and scrape: {final} seconds')
