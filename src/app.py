@@ -6,7 +6,9 @@ from model import RowParameters
 from utils import NumUtils as util
 from utils import JsonUtils, DateUtils
 from publisher import ZmqPublisher
-from scraper import InvestingComScraper
+from scraper import InvestingComLightWeightScraper
+from bs4 import BeautifulSoup as BSoup
+
 import logging, time
 
 logging.basicConfig(filename="applogs", format='%(asctime)s%(message)s', filemode='w')
@@ -32,9 +34,11 @@ def getDriver():
 
 if __name__ == '__main__':
     publisher =  ZmqPublisher()
-    investingcom_scraper = InvestingComScraper()
+    investingcom_scraper = InvestingComLightWeightScraper()
 
     driver = getDriver()
+    driver.get(f"https://www.investing.com/economic-calendar/")
+
     while True:
         start_timestamp = time.time()
         logging.debug(f'Starting parsing at: {time.time()}')
