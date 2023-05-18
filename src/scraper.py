@@ -18,7 +18,8 @@ class Scraper:
     def scrape(url:str, driver):
         pass
     
-
+    def _isCPIEvent(self, event:str) -> bool:
+        return ("Core CPI (YoY)" in event) or ("CPI (YoY)" in event) or ("Core CPI (MoM)" in event) or ("CPI (MoM)" in event)
 
 class InvestingComLightWeightScraper(Scraper):
 
@@ -65,6 +66,10 @@ class InvestingComLightWeightScraper(Scraper):
                 if "K" in previous:
                     previous = previous.replace('K', '')
                 
+                if (super()._isCPIEvent(event = event) and currency == 'USD'):
+                    event:str = CPIEvent.toCPIEvent(event).value
+                    logging.info(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}")
+                    print(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}") 
 
                 rowParams = RowParameters(
                     date = date, 
@@ -81,6 +86,7 @@ class InvestingComLightWeightScraper(Scraper):
                 print(e)
                 continue
         return result
+    
 
 
 
@@ -137,7 +143,7 @@ class InvestingComScraper(Scraper):
                 if "K" in previous:
                     previous = previous.replace('K', '')
                 
-                if (self.__isCPIEvent(event = event) and currency == 'USD'):
+                if (super()._isCPIEvent(event = event) and currency == 'USD'):
                     event:str = CPIEvent.toCPIEvent(event).value
                     logging.info(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}")
                     print(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}") 
@@ -158,6 +164,3 @@ class InvestingComScraper(Scraper):
                 continue
         return rows
     
-
-    def __isCPIEvent(self, event:str) -> bool:
-        return ("Core CPI (YoY)" in event) or ("CPI (YoY)" in event) or ("Core CPI (MoM)" in event) or ("CPI (MoM)" in event)
