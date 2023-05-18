@@ -37,11 +37,11 @@ if __name__ == '__main__':
     investingcom_scraper = InvestingComLightWeightScraper()
 
     driver = getDriver()
-    driver.get(f"https://www.investing.com/economic-calendar/")
 
     while True:
         start_timestamp = time.time()
         logging.debug(f'Starting parsing at: {time.time()}')
+        driver.get(f"https://www.investing.com/economic-calendar/")
         rows = investingcom_scraper.scrape(driver)
         #send with zeromq
         message:dict = JsonUtils().convertListToJson(elements= rows)
@@ -51,7 +51,6 @@ if __name__ == '__main__':
         if rows:
             publisher.publish(message=message)
 
-        driver.refresh()
         end_timestamp = time.time()
         final = end_timestamp - start_timestamp
         print(f'Time to load and scrape: {final} seconds')
