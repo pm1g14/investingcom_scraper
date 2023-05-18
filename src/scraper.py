@@ -17,6 +17,7 @@ class Scraper:
 
     def scrape(url:str, driver):
         pass
+    
 
 
 class InvestingComLightWeightScraper(Scraper):
@@ -56,6 +57,13 @@ class InvestingComLightWeightScraper(Scraper):
                     forecast = forecast.replace('B', '')
                 if "B" in previous:
                     previous = previous.replace('B', '')
+
+                if ("K" in actual):
+                    actual = actual.replace('K', '')
+                if "K" in forecast:
+                    forecast = forecast.replace('K', '')
+                if "K" in previous:
+                    previous = previous.replace('K', '')
                 
 
                 rowParams = RowParameters(
@@ -121,6 +129,13 @@ class InvestingComScraper(Scraper):
                     forecast = forecast.replace('B', '')
                 if "B" in previous:
                     previous = previous.replace('B', '')
+
+                if ("K" in actual):
+                    actual = actual.replace('K', '')
+                if "K" in forecast:
+                    forecast = forecast.replace('K', '')
+                if "K" in previous:
+                    previous = previous.replace('K', '')
                 
                 if (self.__isCPIEvent(event = event) and currency == 'USD'):
                     event:str = CPIEvent.toCPIEvent(event).value

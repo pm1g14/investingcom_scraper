@@ -12,7 +12,7 @@ class NumUtils:
 
     def stringToFloat(value) -> Optional:
         try:
-            return Optional.of(float(value))
+            return Optional.of(float(value.replace(',', '')))
         except ValueError:
             return Optional.empty
         
