@@ -2,6 +2,7 @@ from enum import Enum
 from optional import Optional, something
 from attr import dataclass
 from typing import List
+
 import json
 
 @dataclass(frozen=True)
@@ -38,16 +39,16 @@ class CPIEvent(str, Enum):
     DEFAULT = ''
 
     def toCPIEvent(event:str):
-        if (event == 'Core CPI (YoY)'):
+        if ('Core CPI (YoY)' in event):
             return CPIEvent.CORE_CPI_Y_Y
 
-        elif (event == 'CPI (YoY)'):
+        elif ('CPI (YoY)' in event):
             return CPIEvent.CPI_Y_Y
         
-        elif (event == 'Core CPI (MoM)'):
+        elif ('Core CPI (MoM)' in event):
             return CPIEvent.CORE_CPI_M_M
         
-        elif (event == 'CPI (MoM)'):
+        elif ('CPI (MoM)' in event):
             return CPIEvent.CPI_M_M
         
         else:
