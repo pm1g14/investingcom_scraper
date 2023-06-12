@@ -85,6 +85,18 @@ class InvestingComLightWeightScraper(Scraper):
             except Exception as e:
                 print(e)
                 continue
+
+        result.append(
+            RowParameters(
+                date ='',
+                time = '',
+                currency='USD',
+                event='CPI y/y',
+                actual='5.2',
+                forecast='5.5',
+                previous=''
+            )
+        )
         return result
     
 
