@@ -94,7 +94,7 @@ class InvestingComLightWeightScraper(Scraper):
                 event='CPI y/y',
                 actual='5.2',
                 forecast='5.5',
-                previous=''
+                previous='6.6'
             )
         )
         return result
