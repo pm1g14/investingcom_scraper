@@ -66,7 +66,7 @@ class InvestingComLightWeightScraper(Scraper):
                 if "K" in previous:
                     previous = previous.replace('K', '')
                 
-                if (super()._isCPIEvent(event = event) and currency == 'USD'):
+                if (super()._isCPIEvent(event = event) and 'USD' in currency):
                     event:str = CPIEvent.toCPIEvent(event).value
                     logging.info(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}")
                     print(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}") 
