@@ -37,11 +37,12 @@ if __name__ == '__main__':
     investingcom_scraper = InvestingComLightWeightScraper()
 
     driver = getDriver()
+    driver.get(f"https://www.investing.com/economic-calendar/")
 
     while True:
         start_timestamp = time.time()
         logging.debug(f'Starting parsing at: {time.time()}')
-        driver.get(f"https://www.investing.com/economic-calendar/")
+        driver.refresh()
         rows = investingcom_scraper.scrape(driver)
         #send with zeromq
         message:dict = JsonUtils().convertListToJson(elements= rows)
