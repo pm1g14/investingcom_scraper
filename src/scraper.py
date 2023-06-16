@@ -73,7 +73,9 @@ class InvestingComLightWeightScraper(Scraper):
                         logging.info(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}")
                         print(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}") 
 
-                if ('Construction Output (MoM) (Apr)' in event and actual != ''):
+                if ('Italian CPI (YoY) (May)' in event):
+
+                    logging.info(f"pirlpirl {actual}")
                     logging.info(f"Time cleveland got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}")
                     print(f"Time cleveland got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}") 
 
