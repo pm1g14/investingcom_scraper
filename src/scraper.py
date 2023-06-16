@@ -44,8 +44,7 @@ class InvestingComLightWeightScraper(Scraper):
                 actual = cells[4].get_text()
                 forecast = cells[5].get_text()
                 previous = cells[6].get_text()
-                if (actual != ''):
-                    logging.debug(f"yoooooo {datetime.datetime.now().strftime('%H:%M:%S')}")
+                
                 if ("%" in actual):
                     actual = actual.replace('%', '')
                 if "%" in forecast:
