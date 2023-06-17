@@ -28,6 +28,7 @@ def getDriver():
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--window-size=1920,1080")
+    chrome_options.add_argument("--disable-cache")
     driver = webdriver.Chrome(options = chrome_options)
     return driver
 
@@ -36,13 +37,11 @@ if __name__ == '__main__':
     publisher =  ZmqPublisher()
     investingcom_scraper = InvestingComLightWeightScraper()
 
-    driver = getDriver()
-    driver.get(f"https://www.investing.com/economic-calendar/")
-
     while True:
+        driver = getDriver()
         start_timestamp = time.time()
         logging.debug(f'Starting parsing at: {time.time()}')
-        driver.refresh()
+        driver.get(f"https://www.investing.com/economic-calendar/")
         rows = investingcom_scraper.scrape(driver)
         #send with zeromq
         message:dict = JsonUtils().convertListToJson(elements= rows)
@@ -56,3 +55,4 @@ if __name__ == '__main__':
         final = end_timestamp - start_timestamp
         print(f'Time to load and scrape: {final} seconds')
         logging.debug(f'Time to load and scrape: {final} seconds')
+        driver.close()
