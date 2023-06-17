@@ -69,17 +69,6 @@ class InvestingComLightWeightScraper(Scraper):
                 if (super()._isCPIEvent(event = event) and 'USD' in currency):
                     event:str = CPIEvent.toCPIEvent(event).value
 
-                    if (actual != ''):
-                        logging.info(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}")
-                        print(f"Time actual got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}") 
-
-                if ('Italian CPI (YoY) (May)' in event):
-
-                    logging.info(f"pirlpirl {actual}")
-                    logging.info(f"Time cleveland got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}")
-                    print(f"Time cleveland got updated is: {datetime.datetime.now().strftime('%H:%M:%S')}") 
-
-
                 rowParams = RowParameters(
                     date = date, 
                     time = eventTime, 
