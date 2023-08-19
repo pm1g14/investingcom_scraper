@@ -1,4 +1,3 @@
-aiosignal==1.2.0
 anyio==3.6.1
 apischema==0.16.6
 async-generator==1.10
