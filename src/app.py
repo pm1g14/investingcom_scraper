@@ -108,7 +108,7 @@ def invoke_selenium_scraper():
     driver = getDriver()
     maybe_live_event_to_wait_for, currency = process_input()
 
-    while True:
+    def parse_page_for_event():
         logging.debug(f'Starting parsing at: {time.time()}')
         start_timestamp = time.time()
 
@@ -126,6 +126,12 @@ def invoke_selenium_scraper():
         final = end_timestamp - start_timestamp
         print(f'Time to load and scrape: {final} seconds')
         logging.debug(f'Time to load and scrape: {final} seconds')
+
+    if maybe_live_event_to_wait_for or currency:
+        parse_page_for_event()
+    else:
+        while True:
+            parse_page_for_event()
 
 
 if __name__ == '__main__':

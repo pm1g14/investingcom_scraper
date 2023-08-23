@@ -218,7 +218,7 @@ class InvestingComScraper(Scraper):
                 isPastEvent = InvestingComScraper.__isPastEvent(eventTime)
                 
                 if not isPastEvent and (maybeCurrency and maybeEventToWaitFor):
-                    if event == maybeEventToWaitFor and currency == currency:
+                    if event.strip() == maybeEventToWaitFor and currency.strip() == maybeCurrency:
                     
                         try:
                             actual = row.find_element(By.XPATH, f'/html/body/div[6]/section/div[6]/table/tbody/tr[{index}]/td[5]').text
