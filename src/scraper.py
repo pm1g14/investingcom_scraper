@@ -252,7 +252,7 @@ class InvestingComScraper(Scraper):
                 if "K" in previous:
                     previous = previous.replace('K', '')
                 
-                if (super()._isCPIEvent(event = event) and 'USD' in currency):
+                if (super()._isCPIEvent(event = event) and maybeCurrency in currency):
                     event:str = CPIEvent.toCPIEvent(event).value
                     
 
