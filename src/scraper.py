@@ -173,17 +173,18 @@ class InvestingComScraper(Scraper):
                 nowDatetime = datetime.datetime.utcnow()
                 current_gmt_minus_4 = nowDatetime.replace(tzinfo=pytz.UTC).astimezone(gmt_minus_4)
                 eventDatetime = current_gmt_minus_4 + timedelta(minutes=toMin)
-                return current_gmt_minus_4.timestamp() - eventDatetime.timestamp() >= 120
+                return current_gmt_minus_4 > eventDatetime
             except Exception:
                 print("Cannot convert minutes string to a number")
                 return True
         else:
             eventTimeStr = f'{eventTime}:00'
-            eventDatetime = DateUtils.convertDateAndTimeStrToDatetime(eventTimeStr, date.today()).timestamp()
-            if eventDatetime:
+            eventDatetime = DateUtils.convertDateAndTimeStrToDatetime(eventTimeStr, date.today())
+            eventDttoLocalizedDt = gmt_minus_4.localize(eventDatetime)
+            if eventDttoLocalizedDt:
                 nowDatetime = datetime.datetime.utcnow()
                 current_gmt_minus_4 = nowDatetime.replace(tzinfo=pytz.UTC).astimezone(gmt_minus_4)
-                return current_gmt_minus_4.timestamp() - eventDatetime >= 120
+                return current_gmt_minus_4 > eventDttoLocalizedDt
             return True
 
     def scrape(self, driver, maybeEventToWaitFor: str | None, maybeCurrency: str | None):
