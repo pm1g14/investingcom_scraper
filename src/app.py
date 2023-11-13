@@ -12,6 +12,7 @@ from bs4 import BeautifulSoup as BSoup
 from selenium.webdriver.support.ui import WebDriverWait
 from optional import Optional
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
 
 import logging, time
 import cfscrape
@@ -34,7 +35,8 @@ def getDriver():
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_argument("--disable-cache")
-    driver = webdriver.Chrome(options = chrome_options)
+    service = Service(executable_path="/usr/bin/chromedriver")
+    driver = webdriver.Chrome(options = chrome_options, service=service)
     return driver
 
 def invoke_scraper():
