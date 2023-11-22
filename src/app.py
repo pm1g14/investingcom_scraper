@@ -35,9 +35,10 @@ def getDriver():
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_argument("--disable-cache")
-    service = Service(executable_path="/usr/bin/chromedriver")
+    service = Service(executable_path="/usr/bin/chromedriver/chromedriver")
     driver = webdriver.Chrome(options = chrome_options, service=service)
     return driver
+    
 
 def invoke_scraper():
     publisher =  ZmqPublisher()
