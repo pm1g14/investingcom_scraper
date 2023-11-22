@@ -253,7 +253,7 @@ class InvestingComScraper(Scraper):
                 if "K" in previous:
                     previous = previous.replace('K', '')
                 
-                if (super()._isCPIEvent(event = event) and maybeCurrency in currency):
+                if (super()._isCPIEvent(event = event) and maybeCurrency is not None and maybeCurrency in currency):
                     event:str = CPIEvent.toCPIEvent(event).value
                     
 
